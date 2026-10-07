@@ -18,6 +18,13 @@ DB = os.path.join(DATA, "school.db")
 DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"]
 USER_RE = re.compile(r"^[A-Za-z0-9_\u0600-\u06FF]{3,30}$")
 FAILS = {}  # محاولات الدخول الفاشلة
+# ترقية حساب ADMIN1 إلى مدير تلقائياً
+try:
+    with sqlite3.connect(DB) as _c:
+        _c.execute("UPDATE teachers SET role='admin' WHERE name='ADMIN1'")
+        _c.commit()
+except Exception:
+    pass
 TZ_HOURS = 3  # توقيت العراق (UTC+3) لعرض الأوقات في سجل النشاط
 PER_PAGE = 50
 UPLOADS = os.path.join(DATA, "uploads")  # صور الطلاب (خارج المجلد العام)
